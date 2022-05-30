@@ -37,8 +37,14 @@
     <artifactId>mysql-connector-java</artifactId>
     <version>8.0.29</version>
 </dependency>
+<!-- https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet-core -->
+<dependency>
+    <groupId>org.jboss.weld.servlet</groupId>
+    <artifactId>weld-servlet-core</artifactId>
+    <version>5.0.0.Final</version>
+</dependency>
 
-    </dependencies>
+ </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>

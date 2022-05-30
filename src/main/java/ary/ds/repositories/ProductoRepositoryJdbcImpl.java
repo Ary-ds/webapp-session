@@ -1,20 +1,58 @@
 package ary.ds.repositories;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
+import ary.ds.anotacion.MySqlCom;
+import ary.ds.anotacion.Repository;
+import ary.ds.interceptors.Logging;
 import ary.ds.models.Categoria;
 import ary.ds.models.Producto;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.inject.Inject;
 
-public class ProductoRepositoryJdbcImpl implements Repository<Producto> {
+//@ApplicationScoped
+@Repository
+public class ProductoRepositoryJdbcImpl implements CrudRepository<Producto> {
+	
+	@Inject
+	private Logger log;
+	
+//	inyeccione via anotaciones
+	@Inject
+//	@Named("conn")
+	@MySqlCom
     private Connection conn;
+	
+	
 
-    public ProductoRepositoryJdbcImpl(Connection conn) {
-        this.conn = conn;
+//    public ProductoRepositoryJdbcImpl(Connection conn) {
+//        this.conn = conn;
+//    }
+	
+	@PostConstruct
+    public void inicializar() {
+    	
+//    	System.out.println("inicializando el " + this.getClass().getName());
+    	log.info("inicializando el " + this.getClass().getName());
+    }
+
+    @PreDestroy
+    public void destruir() {
+//    	System.out.println("destruyndo  el " + this.getClass().getName());
+    	log.info("destruyndo  el " + this.getClass().getName());
     }
 
     @Override
+    @Logging
     public List<Producto> listar() throws SQLException {
         List<Producto> productos = new ArrayList<>();
 
@@ -30,6 +68,7 @@ public class ProductoRepositoryJdbcImpl implements Repository<Producto> {
     }
 
     @Override
+    @Logging
     public Producto porId(Long id) throws SQLException {
         Producto producto = null;
         try (PreparedStatement stmt = conn.prepareStatement("SELECT p.*, c.nombre as categoria FROM productos as p " +

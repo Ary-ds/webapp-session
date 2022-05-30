@@ -7,6 +7,8 @@ import java.util.Optional;
 import ary.ds.models.Categoria;
 import ary.ds.models.Producto;
 
+
+//@Alternative
 public class ProductoServiceImpl implements ProductoService{
     @Override
     public List<Producto> listar() {

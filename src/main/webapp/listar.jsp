@@ -26,7 +26,7 @@
         <c:if test="${username.present}">
         <td>${p.precio}</td>
         <td><a class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/carro/agregar?id=${p.id}">agregar al carro</a></td>
-        <td><a class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/productos/form?id=${p.id}">editar</a></td>
+        <td><a class="btn btn-sm btn-warning" href="${pageContext.request.contextPath}/productos/form?id=${p.id}">editar</a></td>
         <td><a class="btn btn-sm btn-danger" onclick="return confirm('esta seguro que desea eliminar?');"
         href="${pageContext.request.contextPath}/productos/eliminar?id=${p.id}">eliminar</a></td>
         </c:if>

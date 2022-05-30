@@ -1,22 +1,33 @@
 package ary.ds.controllers;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import ary.ds.models.Usuario;
-import ary.ds.services.*;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.util.Optional;
+
+import ary.ds.models.Usuario;
+import ary.ds.services.LoginService;
+import ary.ds.services.LoginServiceSessionImpl;
+import ary.ds.services.UsuarioService;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet({"/login", "/login.html"})
 public class LoginServlet extends HttpServlet {
+	
+	@Inject
+	private  UsuarioService service;
+	
+	@Inject
+	private  LoginService auth;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LoginService auth = new LoginServiceSessionImpl();
+//        LoginService auth = new LoginServiceSessionImpl();
         Optional<String> usernameOptional = auth.getUsername(req);
 
         if (usernameOptional.isPresent()) {
@@ -47,7 +58,7 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        UsuarioService service = new UsuarioServiceImpl((Connection) req.getAttribute("conn"));
+//        UsuarioService service = new UsuarioServiceImpl((Connection) req.getAttribute("conn"));
         Optional<Usuario> usuarioOptional = service.login(username, password);
         if (usuarioOptional.isPresent()) {
 

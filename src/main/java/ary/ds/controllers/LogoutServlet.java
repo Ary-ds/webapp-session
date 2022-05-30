@@ -1,5 +1,6 @@
 package ary.ds.controllers;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -13,10 +14,14 @@ import ary.ds.services.LoginServiceSessionImpl;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
+	
+	@Inject
+	private  LoginService auth;
+	
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LoginService auth = new LoginServiceSessionImpl();
+//        LoginService auth = new LoginServiceSessionImpl();
         Optional<String> username = auth.getUsername(req);
         if (username.isPresent()) {
             HttpSession session = req.getSession();

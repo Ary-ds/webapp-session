@@ -1,38 +1,53 @@
 package ary.ds.filters;
 
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpServletResponse;
-import ary.ds.services.ServiceJdbcException;
-import ary.ds.util.ConexionBaseDatosDS;
-
-import javax.naming.NamingException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import ary.ds.anotacion.MySqlCom;
+import ary.ds.services.ServiceJdbcException;
+import jakarta.inject.Inject;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletResponse;
+
 @WebFilter("/*")
 public class ConexionFilter implements Filter {
+	
+////inyectamos la conexion 
+//	@Inject
+////	@Named("conn")
+//	@MySqlCom
+//	private Connection conn;
+	
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        try (Connection conn = ConexionBaseDatosDS.getConnection()) {
-
-            if (conn.getAutoCommit()) {
-                conn.setAutoCommit(false);
-            }
+//        try (Connection conn = ConexionBaseDatosDS.getConnection()) {
+//        try (Connection connRequest = this.conn) {
+//        	try {
+//        		Connection connRequest = this.conn;
+//
+//            if (connRequest.getAutoCommit()) {
+//            	connRequest.setAutoCommit(false);
+//            }
 
             try {
-                request.setAttribute("conn", conn);
+//                request.setAttribute("conn", connRequest);
                 chain.doFilter(request, response);
-                conn.commit();
-            } catch (SQLException | ServiceJdbcException e) {
-                conn.rollback();
+//                connRequest.commit();
+//            } catch (SQLException | ServiceJdbcException e) {
+            } catch (ServiceJdbcException e) {
+//            	connRequest.rollback();
                 ((HttpServletResponse)response).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                 e.printStackTrace();
             }
-        } catch (SQLException | NamingException throwables) {
-            throwables.printStackTrace();
-        }
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
     }
 }

@@ -1,10 +1,13 @@
 package ary.ds.controllers;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ary.ds.anotacion.ProductoServicePrincipal;
 import ary.ds.models.Categoria;
 import ary.ds.models.Producto;
 import ary.ds.services.ProductoService;
@@ -21,10 +24,15 @@ import java.util.Optional;
 
 @WebServlet("/productos/form")
 public class ProductoFormServlet extends HttpServlet {
+	
+	@Inject
+	@ProductoServicePrincipal
+	private ProductoService service;
+	
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Connection conn = (Connection) req.getAttribute("conn");
-        ProductoService service = new ProductoServiceJdbcImpl(conn);
+//        Connection conn = (Connection) req.getAttribute("conn");
+//        ProductoService service = new ProductoServiceJdbcImpl(conn);
         long id;
         try {
             id = Long.parseLong(req.getParameter("id"));
@@ -49,8 +57,8 @@ public class ProductoFormServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Connection conn = (Connection) req.getAttribute("conn");
-        ProductoService service = new ProductoServiceJdbcImpl(conn);
+//        Connection conn = (Connection) req.getAttribute("conn");
+//        ProductoService service = new ProductoServiceJdbcImpl(conn);
         String nombre = req.getParameter("nombre");
 
         Integer precio;

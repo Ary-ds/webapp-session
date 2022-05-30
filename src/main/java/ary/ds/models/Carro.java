@@ -1,14 +1,44 @@
 package ary.ds.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
-public class Carro {
-    private List<ItemCarro> items;
+import ary.ds.anotacion.CarroCompra;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.inject.Inject;
 
-    public Carro() {
-        this.items = new ArrayList<>();
+//@SessionScoped
+//@Named("carro")
+@CarroCompra
+public class Carro implements Serializable {
+    
+	private static final long serialVersionUID = 1L;
+	
+	private List<ItemCarro> items;
+	
+//	cuando inyectamos en clases de sessiones hay que poner transient porque no forma parte de la session
+	@Inject
+	private transient Logger log;
+
+//    public Carro() {
+//        this.items = new ArrayList<>();
+//    }
+    
+    @PostConstruct
+    public void inicializar() {
+    	this.items = new ArrayList<>();
+//    	System.out.println("inicializando el carro de compra");
+    	log.info("inicializando el carro de compra");
+    }
+
+    @PreDestroy
+    public void destruir() {
+//    	System.out.println("destruyndo  el carro de compra");
+    	log.info("destruyndo  el carro de compra");
     }
 
     public void addItemCarro(ItemCarro itemCarro) {

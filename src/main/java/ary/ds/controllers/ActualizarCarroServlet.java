@@ -1,5 +1,6 @@
 package ary.ds.controllers;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,14 +17,19 @@ import ary.ds.models.Carro;
 
 @WebServlet("/carro/actualizar")
 public class ActualizarCarroServlet extends HttpServlet {
+	
+//	inyectamos la clase carro 
+	@Inject
+	private Carro carro;
+	
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if (session.getAttribute("carro") != null) {
-            Carro carro = (Carro) session.getAttribute("carro");
+//        if (session.getAttribute("carro") != null) {
+//            Carro carro = (Carro) session.getAttribute("carro");
             updateProductos(req, carro);
             updateCantidades(req, carro);
-        }
+//        }
 
         resp.sendRedirect(req.getContextPath() + "/carro/ver");
     }
