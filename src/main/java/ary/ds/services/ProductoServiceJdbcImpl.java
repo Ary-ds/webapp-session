@@ -1,25 +1,33 @@
 package ary.ds.services;
 
-import ary.ds.models.Categoria;
-import ary.ds.models.Producto;
-import ary.ds.repositories.CategoriaRepositoryImpl;
-import ary.ds.repositories.ProductoRepositoryJdbcImpl;
-import ary.ds.repositories.Repository;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import ary.ds.anotacion.ProductoServicePrincipal;
+import ary.ds.anotacion.Service;
+import ary.ds.models.Categoria;
+import ary.ds.models.Producto;
+import ary.ds.repositories.CrudRepository;
+import jakarta.inject.Inject;
+
+//@ApplicationScoped
+@Service
+@ProductoServicePrincipal
 public class ProductoServiceJdbcImpl implements ProductoService{
-    private Repository<Producto> repositoryJdbc;
-    private Repository<Categoria> repositoryCategoriaJdbc;
+	
+	@Inject
+    private CrudRepository<Producto> repositoryJdbc;
+	
+	@Inject
+    private CrudRepository<Categoria> repositoryCategoriaJdbc;
 
-    public ProductoServiceJdbcImpl(Connection connection) {
-        this.repositoryJdbc = new ProductoRepositoryJdbcImpl(connection);
-        this.repositoryCategoriaJdbc = new CategoriaRepositoryImpl(connection);
-    }
+//    public ProductoServiceJdbcImpl(Connection connection) {
+//        this.repositoryJdbc = new ProductoRepositoryJdbcImpl(connection);
+//        this.repositoryCategoriaJdbc = new CategoriaRepositoryImpl(connection);
+//    }
 
+    
     @Override
     public List<Producto> listar() {
         try {

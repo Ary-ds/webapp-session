@@ -6,14 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import ary.ds.anotacion.MySqlCom;
+import ary.ds.anotacion.Repository;
 import ary.ds.models.Usuario;
+import jakarta.inject.Inject;
 
+//@ApplicationScoped
+@Repository
 public class UsuarioRepositoryImpl implements UsuarioRepository{
+	
+//	inyecion mediante atribute 
+	@Inject
+	
+//	@Named("conn")
+	@MySqlCom
     private Connection conn;
 
-    public UsuarioRepositoryImpl(Connection conn) {
-        this.conn = conn;
-    }
+//    public UsuarioRepositoryImpl(Connection conn) {
+//        this.conn = conn;
+//    }
 
     @Override
     public List<Usuario> listar() throws SQLException {

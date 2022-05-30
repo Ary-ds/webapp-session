@@ -1,17 +1,32 @@
 package ary.ds.repositories;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import ary.ds.anotacion.MySqlCom;
+import ary.ds.anotacion.Repository;
 import ary.ds.models.Categoria;
+import jakarta.inject.Inject;
 
-public class CategoriaRepositoryImpl implements Repository<Categoria>{
+//@ApplicationScoped
+@Repository
+public class CategoriaRepositoryImpl implements CrudRepository<Categoria>{
+	
+//	inyecion mediante constructor 
+	@Inject
+//	@Named("conn")
+	@MySqlCom
     private Connection conn;
-
-    public CategoriaRepositoryImpl(Connection conn) {
-        this.conn = conn;
-    }
+	
+//	inyecion mediante constructor 
+//    public CategoriaRepositoryImpl(@Named("conn") Connection conn) {
+//        this.conn = conn;
+//    }
 
     @Override
     public List<Categoria> listar() throws SQLException {

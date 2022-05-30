@@ -4,6 +4,6 @@ import java.sql.SQLException;
 
 import ary.ds.models.Usuario;
 
-public interface UsuarioRepository extends Repository<Usuario>{
+public interface UsuarioRepository extends CrudRepository<Usuario>{
     Usuario porUsername(String username) throws SQLException;
 }
